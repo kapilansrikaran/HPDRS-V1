@@ -4,50 +4,49 @@ package com.ruhuna.uhpdcs.model;
 import jakarta.persistence.*;
 
 import java.security.Timestamp;
+import java.util.Objects;
 
 @Entity
 @Table(name = "users")
 public class User {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long user_id;
+    @Column(name = "user_id")
+    private Long userId;
 
+    @Column(name = "username", unique = true, nullable = false, length = 50)
     private String username;
 
-    @Column(name = "user_password")
-    private String password;
+    @Column(name = "user_password", nullable = false, length = 200)
+    private String userPassword;
 
-    private String first_name;
-    private String last_name;
-    private String email;
+    // You can add more fields such as first name, last name, email, registration date, etc.
 
-    @Column(name = "registration_date")
-    private Timestamp registrationDate;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "role_id", nullable = false)
+    private Role roleId;
 
-    @Enumerated(EnumType.STRING)
-    private Role role;
+    // Constructors
 
-    // Constructor
-    public User(String username, String userPassword, String firstName, String lastName, String email, Timestamp registrationDate, Long roleId) {
+    public User() {
+        // Default constructor
+    }
+
+    public User(String username, String userPassword, Role roleId) {
         this.username = username;
         this.userPassword = userPassword;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.email = email;
-        this.registrationDate = registrationDate;
         this.roleId = roleId;
     }
 
-
     // Getters and setters
 
-
-    public Long getUser_id() {
-        return user_id;
+    public Long getUserId() {
+        return userId;
     }
 
-    public void setUser_id(Long user_id) {
-        this.user_id = user_id;
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 
     public String getUsername() {
@@ -58,51 +57,38 @@ public class User {
         this.username = username;
     }
 
-    public String getPassword() {
-        return password;
+    public String getUserPassword() {
+        return userPassword;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public String getFirst_name() {
-        return first_name;
-    }
-
-    public void setFirst_name(String first_name) {
-        this.first_name = first_name;
-    }
-
-    public String getLast_name() {
-        return last_name;
-    }
-
-    public void setLast_name(String last_name) {
-        this.last_name = last_name;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public Timestamp getRegistrationDate() {
-        return registrationDate;
-    }
-
-    public void setRegistrationDate(Timestamp registrationDate) {
-        this.registrationDate = registrationDate;
+    public void setUserPassword(String userPassword) {
+        this.userPassword = userPassword;
     }
 
     public Role getRole() {
-        return role;
+        return roleId;
     }
 
     public void setRole(Role role) {
-        this.role = role;
+        this.roleId = roleId;
     }
+
+    // Other getters and setters for additional fields
+
+    // Equals and hashCode (useful for comparing user objects)
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return Objects.equals(userId, user.userId);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(userId);
+    }
+
+
 }
