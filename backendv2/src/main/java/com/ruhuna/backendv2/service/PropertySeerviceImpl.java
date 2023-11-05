@@ -50,4 +50,5 @@ public class PropertySeerviceImpl implements PropertyService{
 
 
 
+
 }

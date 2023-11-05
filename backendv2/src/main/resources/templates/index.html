@@ -8,6 +8,28 @@
 		  href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
 		  integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
 		  crossorigin="anonymous">
+	<script>
+		document.querySelectorAll('.btn-info').forEach(button => {
+			button.addEventListener('click', function () {
+				fetch(this.getAttribute('href'), { method: 'GET' })
+						.then(response => {
+							if (response.ok) {
+								alert('QR code generated successfully.');
+							} else {
+								alert('Error generating QR code.');
+							}
+						})
+						.catch(error => {
+							console.error('Error:', error);
+							alert('An error occurred while generating QR code.');
+						});
+				return false; // Prevent the link from navigating to the URL.
+			});
+		});
+	</script>
+
+
+
 
 </head>
 <body>
@@ -66,7 +88,10 @@
 			<td>
 				<a th:href="@{/showFormForUpdate/{id}(id=${property.id})}" class="btn btn-primary">Update</a>
 				<a th:href="@{/deleteProperty/{id}(id=${property.id})}" class="btn btn-danger">Delete</a>
-				<a th:href="@{/deleteProperty/{id}(id=${property.id})}" class="btn btn-info">Generate QR Code</a>
+				<a th:href="@{/generate/{id}(id=${property.id})}" class="btn btn-info">Generate QR Code for Property</a>
+
+
+
 
 			</td>
 		</tr>

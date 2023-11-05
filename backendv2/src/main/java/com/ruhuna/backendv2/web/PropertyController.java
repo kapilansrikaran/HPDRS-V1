@@ -2,13 +2,18 @@ package com.ruhuna.backendv2.web;
 
 import com.ruhuna.backendv2.model.Property;
 import com.ruhuna.backendv2.service.PropertyService;
+import com.ruhuna.backendv2.utils.QRCodeGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.util.List;
+
 
 @Controller
 public class PropertyController {
@@ -78,4 +83,25 @@ public class PropertyController {
         model.addAttribute("listProperty", listProperty);
         return "index";
     }
+
+
+
+    @GetMapping("/generate/{id}")
+    public ResponseEntity<String> generateQRCodeForProperty(@PathVariable Long id) {
+        try {
+            Property property = propertyService.getPropertyById(id);
+            if (property != null) {
+                QRCodeGenerator.generateQRCode(property);
+                return ResponseEntity.ok("QR code generated successfully for Property ID: " + id);
+            } else {
+                return ResponseEntity.notFound().build(); // Property with the given ID not found
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error generating QR code.");
+        }
+    }
+
+
+
 }

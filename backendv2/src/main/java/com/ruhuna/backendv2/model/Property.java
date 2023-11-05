@@ -15,6 +15,16 @@ public class Property {
     @Column(name = "property_location")
     private String propertyLocation;
 
+    public Property() {
+
+    }
+
+    public Property(long id, String propertyName, String propertyLocation) {
+        this.id = id;
+        this.propertyName = propertyName;
+        this.propertyLocation = propertyLocation;
+    }
+
     public long getId() {
         return id;
     }
