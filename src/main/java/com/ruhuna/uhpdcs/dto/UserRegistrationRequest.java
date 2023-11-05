@@ -5,7 +5,7 @@ public class UserRegistrationRequest {
     private String password;
     private int roleId;
 
-    private String username;
+  
 
     public UserRegistrationRequest() {
     }
