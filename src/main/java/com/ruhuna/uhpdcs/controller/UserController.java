@@ -33,6 +33,7 @@ public class UserController {
             );
             return ResponseEntity.ok("User registered successfully");
         } catch (Exception e) {
+            
             return ResponseEntity.badRequest().body("Registration failed: " + e.getMessage());
         }
     }
