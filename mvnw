@@ -69,6 +69,8 @@ case "$(uname)" in
     ;;
 esac
 
+
+
 if [ -z "$JAVA_HOME" ] ; then
   if [ -r /etc/gentoo-release ] ; then
     JAVA_HOME=$(java-config --jre-home)
@@ -109,6 +111,8 @@ if [ -z "$JAVA_HOME" ]; then
   fi
 fi
 
+
+
 if [ -z "$JAVACMD" ] ; then
   if [ -n "$JAVA_HOME"  ] ; then
     if [ -x "$JAVA_HOME/jre/sh/java" ] ; then
@@ -131,6 +135,8 @@ fi
 if [ -z "$JAVA_HOME" ] ; then
   echo "Warning: JAVA_HOME environment variable is not set."
 fi
+
+
 
 # traverses directory structure from process work directory to filesystem root
 # first directory with .mvn subdirectory is considered project base directory
@@ -157,6 +163,8 @@ find_maven_basedir() {
   printf '%s' "$(cd "$basedir" || exit 1; pwd)"
 }
 
+
+
 # concatenates all lines of a file
 concat_lines() {
   if [ -f "$1" ]; then
@@ -174,6 +182,8 @@ log() {
     printf '%s\n' "$1"
   fi
 }
+
+
 
 BASE_DIR=$(find_maven_basedir "$(dirname "$0")")
 if [ -z "$BASE_DIR" ]; then
@@ -251,7 +261,10 @@ fi
 # End of extension
 ##########################################################################################
 
+
 # If specified, validate the SHA-256 sum of the Maven wrapper jar file
+
+
 wrapperSha256Sum=""
 while IFS="=" read -r key value; do
   case "$key" in (wrapperSha256Sum) wrapperSha256Sum=$value; break ;;
